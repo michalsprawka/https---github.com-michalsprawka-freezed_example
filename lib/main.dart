@@ -31,6 +31,9 @@ class TodoScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Freezed Test'),),
       body: _TodoList(),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddScreen(),));
+      },child: Icon(Icons.add),),
     );
   }
 }
@@ -85,9 +88,10 @@ class _AddScreenState extends ConsumerState<AddScreen> {
   @override
   void dispose() {
     // TODO: implement dispose
-    
+    super.dispose();
     _descrptionController.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     // final todoState = ref.watch(todosNotifierProvider);
@@ -100,7 +104,8 @@ class _AddScreenState extends ConsumerState<AddScreen> {
         ),
         SizedBox(height: 10,),
         TextButton(onPressed: () async {
-         // await ref.read(todosNotifierProvider.notifier).
+          await ref.read(todosNotifierProvider.notifier).add(_descrptionController.text);
+          Navigator.of(context).pop();
         }, child: Text("dodaj"),),
 
       ],),
