@@ -94,7 +94,7 @@ class _AddScreenState extends ConsumerState<AddScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final todoState = ref.watch(todosNotifierProvider);
+     final todoState = ref.watch(todosNotifierProvider);
     return Scaffold(
       appBar: AppBar(title: Text("add to do"),),
       body: Column(children: [
@@ -103,10 +103,15 @@ class _AddScreenState extends ConsumerState<AddScreen> {
           decoration: InputDecoration(hintText: "Opis"),
         ),
         SizedBox(height: 10,),
-        TextButton(onPressed: () async {
+        todoState.when(
+          data: (todos) =>  TextButton(onPressed: () async {
           await ref.read(todosNotifierProvider.notifier).add(_descrptionController.text);
           Navigator.of(context).pop();
-        }, child: Text("dodaj"),),
+        }, child: Text("dodaj"),), 
+        loading: () => CircularProgressIndicator(),
+        error: (_) => Container()
+        )
+       
 
       ],),
     );

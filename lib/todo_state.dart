@@ -28,13 +28,20 @@ class TodosNotifier extends StateNotifier<Todos> {
   }
   Future<void> add(String description) async {
     _cacheState();
+    List<Todo> _newList = [];
     state.maybeWhen(
       data: (todos) {
-        state = Todos.data([...todos, Todo.create(description)]);
+       // state = Todos.data([...todos, Todo.create(description)]);
+        _newList = [...todos, Todo.create(description)];
       },
       orElse: () {});
+      
       try{
+       state = Todos.loading();
         await FakeTodoRepository().addTodo(description);
+        state = Todos.data(_newList);
+        
+        
       }catch(err) {
          state = Todos.error(err.toString());
       }

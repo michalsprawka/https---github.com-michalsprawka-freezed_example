@@ -9,7 +9,7 @@ final _sampleJsonTodos = [
   '''{"description": "Play games", "id": "0704c57a-6901-40db-88dc-b22269af658b", "completed": false, "created": "2022-03-26T03:52:26.196+00:00"}''',
 ];
 
-const double errorLikelihood = 0.20;
+const double errorLikelihood = 0.00;
 
 class FakeTodoRepository {
   late List<Todo> mockTodoStorage;
@@ -26,7 +26,7 @@ class FakeTodoRepository {
   Future<List<Todo>> retrieveTodos() async {
     await _waitRandomTime();
     // retrieving mock storage
-    if (random.nextDouble() < 0.3) {
+    if (random.nextDouble() < 0.1) {
       throw UnimplementedError('error in retrieve todos');
     } else {
       return mockTodoStorage;
